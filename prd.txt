@@ -1,0 +1,14 @@
+PRODUCT REQUIREMENTS DOCUMENT
+Feature: Rate Limiter System
+
+1. Create a Python class named 'RateLimiter' with __init__ method that accepts max_requests (int) and time_window (int) as parameters
+2. The __init__ method MUST validate that max_requests is greater than 0
+3. The __init__ method MUST validate that time_window is greater than 0
+4. The class MUST implement method 'check_rate_limit' that accepts identifier (string) and returns tuple (bool, int)
+5. The check_rate_limit method MUST return (True, 0) if request is allowed
+6. The check_rate_limit method MUST return (False, retry_seconds) if limit is exceeded
+7. The check_rate_limit method MUST track request timestamps for each identifier
+8. The check_rate_limit method MUST remove expired requests older than time_window
+9. The check_rate_limit method MUST handle None or empty identifier by raising ValueError
+10. The class MUST implement method 'reset' that accepts identifier and clears its data
+11. The code MUST use threading.Lock for thread safety
