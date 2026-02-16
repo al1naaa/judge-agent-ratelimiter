@@ -136,78 +136,39 @@ def save_report(report, output_file):
     except Exception as e:
         print(f"  ERROR saving report: {e}")
         return False
-
-
-def print_summary(report, title):
-    """Print formatted report summary."""
-    print("\n" + "=" * 70)
-    print(f"{title}")
-    print("=" * 70)
-    print(f"\nCompliance Score: {report['compliance_score']}/100")
-    print(f"Status: {report['status']}")
-    print(f"Security Check: {report['security_check']}")
-    
-    print(f"\nAudit Log ({len(report['audit_log'])} findings):")
-    print("-" * 70)
-    
-    for i, item in enumerate(report['audit_log'], 1):
-        status = "PASS" if item['met'] else "FAIL"
-        print(f"\n{i}. [{status}] {item['requirement']}")
-        print(f"   {item['comment']}")
-    
-    print("\n" + "=" * 70)
-
-
+        
 def main():
     """Main execution."""
-    print("Judge Agent - AI Code Compliance Evaluator")
-    print("TSIS 2 Assignment - Dual Evaluation Mode")
-    print("=" * 70 + "\n")
-    
     api_key = os.environ.get('GOOGLE_API_KEY')
     if not api_key:
-        print("ERROR: GOOGLE_API_KEY not set\n")
-        print("Windows PowerShell: $env:GOOGLE_API_KEY='your-key'")
-        print("Get key at: https://aistudio.google.com/apikey")
+        print("ERROR: GOOGLE_API_KEY not set")
+        print("Set with: $env:GOOGLE_API_KEY='your-key'")
         sys.exit(1)
     
-    # Load PRD
-    print("Loading prd.txt...")
+    print("Loading PRD...")
     prd_content = load_file("prd.txt")
     if not prd_content:
         sys.exit(1)
     
     # Evaluate UNSAFE version
-    print("\n" + "=" * 70)
-    print("EVALUATING: code_submission_unsafe.py")
-    print("=" * 70 + "\n")
-    
+    print("\nEvaluating unsafe code...")
     code_unsafe = load_file("code_submission_unsafe.py")
     if code_unsafe:
         report_unsafe = evaluate_code(prd_content, code_unsafe, api_key)
         if report_unsafe:
             save_report(report_unsafe, "compliance_report_unsafe.json")
-            print_summary(report_unsafe, "UNSAFE CODE - EVALUATION REPORT")
+            print(f"Score: {report_unsafe['compliance_score']}/100, Status: {report_unsafe['status']}")
     
     # Evaluate SAFE version
-    print("\n" + "=" * 70)
-    print("EVALUATING: code_submission_safe.py")
-    print("=" * 70 + "\n")
-    
+    print("\nEvaluating safe code...")
     code_safe = load_file("code_submission_safe.py")
     if code_safe:
         report_safe = evaluate_code(prd_content, code_safe, api_key)
         if report_safe:
             save_report(report_safe, "compliance_report_safe.json")
-            print_summary(report_safe, "SAFE CODE - EVALUATION REPORT")
+            print(f"Score: {report_safe['compliance_score']}/100, Status: {report_safe['status']}")
     
-    print("\n" + "=" * 70)
-    print("EVALUATION COMPLETE")
-    print("=" * 70)
-    print("\nGenerated files:")
-    print("  - compliance_report_unsafe.json")
-    print("  - compliance_report_safe.json")
-    print("\n")
+    print("\nDone! Check JSON files for details.")
 
 
 if __name__ == "__main__":
