@@ -1,9 +1,3 @@
-#!/usr/bin/env python3
-"""
-Judge Agent - AI Code Compliance Evaluator
-TSIS 2 Assignment - Rate Limiter System
-"""
-
 import json
 import os
 import sys
