@@ -17,7 +17,7 @@ This project implements a Judge Agent that evaluates Rate Limiter code implement
 
 ## Requirements
 
-- Python 3.8+
+- Python
 - google-genai package
 - Google API key
 
@@ -51,7 +51,3 @@ python judge.py
 - Status: PASS
 - Security: Safe
 - All 11 requirements met
-
-## Author
-
-TSIS 2 Assignment - Cloud Computing Course
