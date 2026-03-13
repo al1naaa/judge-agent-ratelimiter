@@ -1,6 +1,6 @@
 ﻿# Judge Agent - Rate Limiter Code Evaluator
 
-TSIS 2 Assignment - AI-powered code compliance evaluation system.
+AI-powered code compliance evaluation system.
 
 ## Overview
 
